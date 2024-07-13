@@ -21,9 +21,9 @@ where: `<main_url>` is the url of the main page of the book,
                  for example: http://ncode.syosetu.com/n6316bn
         <from> chapter to <to> chapter
 
-For example, to download 転生したらスライムだった件 (http://ncode.syosetu.com/n6316bn), simply run:
+For example, to download 転生したらスライムだった件 (http://ncode.syosetu.com/n6316bn) from chapter 1 to 10, simply run:
 ```bash
-./yomou2ebook.sh http://ncode.syosetu.com/n6316bn
+./yomou2ebook.sh http://ncode.syosetu.com/n6316bn　1 10
 ```
 
 An output.txt file will be created, then converted into an output.epub file 
