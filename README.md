@@ -15,10 +15,11 @@ Extra requirements:
 ## How to use
 Usage is as follow:
 ```bash
-./yomou2ebook.sh <main_url>
+./yomou2ebook.sh <main_url> <from> <to>
 ```
 where: `<main_url>` is the url of the main page of the book,
                  for example: http://ncode.syosetu.com/n6316bn
+        <from> chapter to <to> chapter
 
 For example, to download 転生したらスライムだった件 (http://ncode.syosetu.com/n6316bn), simply run:
 ```bash
