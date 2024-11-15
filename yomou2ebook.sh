@@ -67,7 +67,7 @@ echo "" >> $TXT_OUT
 echo "" >> $TXT_OUT
 
 for chapter_page in $(seq $START $END); do
-    wget --user-agent="Mozilla" $MAIN_URL/$chapter_page -O $chapter_page.html
+    wget -q --user-agent="Mozilla" $MAIN_URL/$chapter_page -O $chapter_page.html
     sleep $SLEEP_TIME
     # <h1 class="p-novel__title p-novel__title--rensai">XXX</h1>
     chapter_title=`pcregrep -Mo '(?s)<h1 class=\"p-novel__title p-novel__title--rensai\">.*?</h1>' $chapter_page.html | sed -E 's/<[^>]*>//gi'`
