@@ -40,12 +40,12 @@ pushd $TMP_DIR > /dev/null
 # Load main page
 wget -q --user-agent="Mozilla" $MAIN_URL -O main_page.html
 sleep $SLEEP_TIME
-# <p class="nover_title">XXX</p>
-NOVEL_TITLE=`pcregrep -Mo '(?s)<p class=\"novel_title\">.*?</p>' main_page.html | sed -E 's/<[^>]*>//g'`
-# <div class="novel_writername">...<a ...>XXX</a></div>
-WRITER_NAME=`pcregrep -Mo '(?s)<div class=\"novel_writername\">.*?</div>' main_page.html | grep -Po '<a .*?>.*?</a>' | sed -E 's/<[^>]*>//g'`
+# <h1 class="p-novel__title">XXX</h1>
+NOVEL_TITLE=`pcregrep -Mo '(?s)<h1 class=\"p-novel__title\">.*?</h1>' main_page.html | sed -E 's/<[^>]*>//g'`
+# <div class="p-novel__author">...<a ...>XXX</a></div>
+WRITER_NAME=`pcregrep -Mo '(?s)<div class=\"p-novel__author\">.*?</div>' main_page.html | grep -Po '<a .*?>.*?</a>' | sed -E 's/<[^>]*>//g'`
 # <div id="novel_ex">XXX</div>
-NOVEL_SUMMARY=`pcregrep -Mo '(?s)<div id=\"novel_ex\">.*?</div>' main_page.html | sed -E 's/<[^>]*>//g'`
+NOVEL_SUMMARY=`pcregrep -Mo '(?s)<div id=\"novel_ex\" class=\"p-novel__summary\">.*?</div>' main_page.html | sed -E 's/<[^>]*>//g'`
 
 echo "Found the following novel:"
 echo "Title: $NOVEL_TITLE"
@@ -67,12 +67,12 @@ echo "" >> $TXT_OUT
 echo "" >> $TXT_OUT
 
 for chapter_page in $(seq $START $END); do
-    wget --user-agent="Mozilla" -q $MAIN_URL/$chapter_page -O $chapter_page.html
+    wget --user-agent="Mozilla" $MAIN_URL/$chapter_page -O $chapter_page.html
     sleep $SLEEP_TIME
-    # <p class="novel_subtitle">XXX</p>
-    chapter_title=`pcregrep -Mo '(?s)<p class=\"novel_subtitle\">.*?</p>' $chapter_page.html | sed -E 's/<[^>]*>//g'`
-    # <div id="novel_honbun" class="novel_view"><p id="L1">XXX</p><p id="L2">XXX</p>...</div>
-    chapter_paragraph=`pcregrep --buffer-size=100K -Mo '(?s)<div id=\"novel_honbun\" class=\"novel_view\">.*?</div>' $chapter_page.html | grep -P '<p id=\"L[0-9]+\">.*?</p>'`
+    # <h1 class="p-novel__title p-novel__title--rensai">XXX</h1>
+    chapter_title=`pcregrep -Mo '(?s)<h1 class=\"p-novel__title p-novel__title--rensai\">.*?</h1>' $chapter_page.html | sed -E 's/<[^>]*>//gi'`
+    # <div class="js-novel-text p-novel__text"><p id="L1">XXX</p><p id="L2">XXX</p>...</div>
+    chapter_paragraph=`pcregrep --buffer-size=100K -Mo '(?s)<div class=\"js-novel-text p-novel__text\">.*?</div>' $chapter_page.html | grep -P '<p id=\"L[0-9]+\">.*?</p>'`
     echo "$chapter_title"
     echo "# $chapter_title" >> $TXT_OUT
     echo "" >> $TXT_OUT
