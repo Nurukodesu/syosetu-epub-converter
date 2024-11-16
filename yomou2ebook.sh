@@ -106,7 +106,7 @@ if [[ -e $EPUB_OUT ]]; then
 fi
 
 echo "Convert raw txt to epub"
-pandoc -F furigana.py $TXT_OUT -o $EPUB_OUT
+pandoc -F $SELF_DIR/furigana.py $TXT_OUT -o $EPUB_OUT
 
 cp $TXT_OUT $SELF_DIR
 cp $EPUB_OUT $SELF_DIR
