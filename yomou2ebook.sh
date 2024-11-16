@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 set -e
 
@@ -88,10 +88,8 @@ for chapter_page in $(seq $START $END); do
             sleep $SLEEP_TIME
             paragraph=`echo $paragraph | sed -E 's/<img [^>]*>/!['"$image_name"']('"${chapter_page}_${line_id}.jpg"')/g'`
         fi
-        # fix " character
-        text=`echo $paragraph | sed -E 's/<[^>]*>//g' | sed -E 's/&quot;/"/g'`
 		# add furigana
-		text=`sed -E -e 's/<rt>[^<\/rt>]*/-&/g' -e 's/<ruby>[^<rt>]*/[&]/g' -e 's/<[^>]*>//g'`
+		text=`echo $paragraph | sed -E -e 's/<rt>[^<\/rt>]*/-&/g' -e 's/<ruby>[^<rt>]*/[&]/g' -e 's/<[^>]*>//g' -e 's/&quot;/"/g'`
         # double space = new line
         echo "$text  " >> $TXT_OUT
     done
@@ -106,7 +104,7 @@ if [[ -e $EPUB_OUT ]]; then
 fi
 
 echo "Convert raw txt to epub"
-pandoc -F furigana.py $TXT_OUT -o $EPUB_OUT
+pandoc -F $SELF_DIR/furigana.py $TXT_OUT -o $EPUB_OUT
 
 cp $TXT_OUT $SELF_DIR
 cp $EPUB_OUT $SELF_DIR
