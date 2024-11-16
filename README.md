@@ -10,6 +10,7 @@ Tested on Linux, but it should also work on Mac OS. For Windows, please install 
 
 Extra requirements:
 - pandoc: to convert txt -> epub
+- pandocfilters: for furigana
 
 
 ## How to use
