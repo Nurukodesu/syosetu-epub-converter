@@ -32,7 +32,7 @@ An output.txt file will be created, then converted into an output.epub file
 
 ## Limitations
 Not supported (yet):
-- furigana 
+ 
 
 
 ## Troubleshoot
