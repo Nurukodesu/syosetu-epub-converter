@@ -89,7 +89,7 @@ for chapter_page in $(seq $START $END); do
             paragraph=`echo $paragraph | sed -E 's/<img [^>]*>/!['"$image_name"']('"${chapter_page}_${line_id}.jpg"')/g'`
         fi
 		# add furigana
-		text=`echo $paragraph | sed -E -e 's/<rt>[^<\/rt>]*/-&/g' -e 's/<ruby>[^<rt>]*/[&]/g' -e 's/<[^>]*>//g' -e 's/&quot;/"/g'`
+		text=`echo $paragraph | sed -E -e 's/<rp>（/<rp>(/g' -e 's/<rp>）/<rp>)/g' -e 's/<rt>[^<\/rt>]*/-&/g' -e 's/<ruby>[^<rt>]*/[&]/g' -e 's/<[^>]*>//g' -e 's/&quot;/"/g'`
         # double space = new line
         echo "$text  " >> $TXT_OUT
     done
